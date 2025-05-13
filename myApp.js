@@ -9,16 +9,31 @@ mongoose
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Error connecting to MongoDB:", err));
 
-var personSchema = new mongoose.Schema({
+async function connectDB() {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("Conectado a MongoDB Atlas");
+  } catch (err) {
+    console.error("Error de conexión a MongoDB: ", err);
+    process.exit(1); // Salir del proceso si la conexión falla
+  }
+}
+
+// Crear el esquema y el modelo después de la conexión
+const personSchema = new mongoose.Schema({
   name: String,
   age: Number,
   favoriteFoods: [String],
 });
 
-var Person = mongoose.model("Person", personSchema);
+const Person = mongoose.model("Person", personSchema);
 
-var createAndSavePerson = function (done) {
-  var janeFonda = new Person({
+// Función para crear y guardar una persona
+const createAndSavePerson = function (done) {
+  const janeFonda = new Person({
     name: "Jane Fonda",
     age: 84,
     favoriteFoods: ["eggs", "fish", "fresh fruit"],
@@ -26,10 +41,20 @@ var createAndSavePerson = function (done) {
 
   janeFonda.save(function (err, data) {
     if (err) return console.error(err);
-    done(null, data);
+    done(null, data); // Llamamos al callback con el resultado
   });
 };
 
+// Conectar y luego crear la persona
+connectDB().then(() => {
+  createAndSavePerson(function (err, data) {
+    if (err) {
+      console.error("Error al crear la persona:", err);
+    } else {
+      console.log("Persona creada:", data);
+    }
+  });
+});
 const createManyPeople = (arrayOfPeople, done) => {
   done(null /*, data*/);
 };
