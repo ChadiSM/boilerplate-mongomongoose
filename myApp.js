@@ -13,11 +13,10 @@ mongoose.connection.on("error", (err) => {
   console.error("❌ Error al conectar a MongoDB:", err);
 });
 
-const personSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
+const Schema = mongoose.Schema;
+
+const personSchema = new Schema({
+  name: { type: String, required: true },
   age: Number,
   favoriteFoods: [String],
 });
