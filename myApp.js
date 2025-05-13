@@ -12,11 +12,11 @@ var personSchema = new mongoose.Schema({
   favoriteFoods: [String],
 });
 
-var Person = mongoose.model("Person", personSchema, "people");
+var PersonModel = mongoose.model("Person", personSchema);
 
 // Función que crea y guarda a una persona de manera asincrónica
 const createAndSavePerson = async (done) => {
-  const janeFonda = new Person({
+  const janeFonda = new PersonModel({
     name: "Jane Fonda",
     age: 84,
     favoriteFoods: ["eggs", "fish", "fresh fruit"],
@@ -81,7 +81,7 @@ const queryChain = (done) => {
  */
 
 //----- **DO NOT EDIT BELOW THIS LINE** ----------------------------------
-exports.Person = Person;
+exports.PersonModel = PersonModel;
 exports.createAndSavePerson = createAndSavePerson;
 exports.findPeopleByName = findPeopleByName;
 exports.findOneByFood = findOneByFood;
