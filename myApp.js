@@ -21,7 +21,7 @@ var PersonModel = mongoose.model("Person", personSchema);
 // Función corregida para crear y guardar una persona
 const createAndSavePerson = async () => {
   const janeFonda = new PersonModel({
-    name: "Jane Fonda",
+    name: "Chadi",
     age: 84,
     favoriteFoods: ["eggs", "fish", "fresh fruit"],
   });
