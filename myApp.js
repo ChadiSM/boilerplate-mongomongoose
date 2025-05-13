@@ -6,6 +6,13 @@ mongoose.connect(process.env.MONGO_URI, {
   useUnifiedTopology: true,
 });
 
+mongoose.connection.on("connected", () => {
+  console.log("✅ Conectado a MongoDB");
+});
+mongoose.connection.on("error", (err) => {
+  console.error("❌ Error al conectar a MongoDB:", err);
+});
+
 let Person;
 
 const createAndSavePerson = (done) => {
