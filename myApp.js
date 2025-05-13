@@ -6,28 +6,25 @@ mongoose
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Error connecting to MongoDB:", err));
 
-var personSchema = new mongoose.Schema({
-  name: String,
-  age: Number,
-  favoriteFoods: [String],
-});
+var personSchema = new mongoose.Schema(
+  {
+    name: String,
+    age: Number,
+    favoriteFoods: [String],
+  },
+  { collection: "people" },
+);
 
 var PersonModel = mongoose.model("Person", personSchema);
 
 // Función que crea y guarda a una persona de manera asincrónica
-const createAndSavePerson = async (done) => {
+const createAndSavePerson = async () => {
   const janeFonda = new PersonModel({
     name: "Jane Fonda",
     age: 84,
     favoriteFoods: ["eggs", "fish", "fresh fruit"],
   });
-
-  try {
-    const data = await janeFonda.save(); // Guardamos la persona
-    done(null, data); // Indicamos que la operación terminó con éxito
-  } catch (err) {
-    done(err); // Si hay un error, pasamos el error al callback
-  }
+  return await janeFonda.save();
 };
 
 // Si el test no pasa, podrías intentar omitir done en el código de las pruebas.
