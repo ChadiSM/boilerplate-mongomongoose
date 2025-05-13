@@ -1,4 +1,5 @@
 require("dotenv").config();
+const mongoose = require("mongoose");
 
 mongoose
   .connect(process.env.MONGO_URI, {
@@ -13,7 +14,6 @@ var personSchema = new mongoose.Schema({
   age: Number,
   favoriteFoods: [String],
 });
-
 
 var Person = mongoose.model("Person", personSchema);
 
