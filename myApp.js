@@ -24,8 +24,8 @@ const personSchema = new mongoose.Schema({
 
 const Person = mongoose.model("Person", personSchema);
 
-var createAndSavePerson = function (done) {
-  var janeFonda = new Person({
+const createAndSavePerson = function (done) {
+  const janeFonda = new Person({
     name: "Jane Fonda",
     age: 84,
     favoriteFoods: ["eggs", "fish", "fresh fruit"],
