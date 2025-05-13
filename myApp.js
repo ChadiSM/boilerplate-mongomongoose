@@ -19,17 +19,19 @@ const PersonModel = mongoose.model("Person", personSchema);
 
 // Función que crea y guarda a una persona de manera asincrónica
 // Función corregida para crear y guardar una persona
-const createAndSavePerson = (done) => {
+const createAndSavePerson = async (done) => {
   const janeFonda = new PersonModel({
     name: "prueba",
     age: 84,
     favoriteFoods: ["eggs", "fish", "fresh fruit"],
   });
 
-  janeFonda
-    .save()
-    .then((data) => done(null, data)) // Éxito: llama a done con los datos
-    .catch((err) => done(err)); // Error: pasa el error al callback
+  try {
+    const data = await janeFonda.save();
+    done(null, data); // Éxito
+  } catch (err) {
+    done(err); // Error
+  }
 };
 
 // Función para crear múltiples personas
