@@ -13,7 +13,16 @@ mongoose.connection.on("error", (err) => {
   console.error("❌ Error al conectar a MongoDB:", err);
 });
 
-let Person;
+const personSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  age: Number,
+  favoriteFoods: [String],
+});
+
+const Person = mongoose.model("Person", personSchema);
 
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
