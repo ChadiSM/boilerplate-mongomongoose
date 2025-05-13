@@ -18,65 +18,73 @@ var personSchema = new mongoose.Schema(
 var PersonModel = mongoose.model("Person", personSchema);
 
 // Función que crea y guarda a una persona de manera asincrónica
-const createAndSavePerson = async (done) => {
+// Función corregida para crear y guardar una persona
+const createAndSavePerson = async () => {
   const janeFonda = new PersonModel({
     name: "Jane Fonda",
     age: 84,
     favoriteFoods: ["eggs", "fish", "fresh fruit"],
   });
-
-  try {
-    const data = await janeFonda.save(); // Guardamos la persona
-    done(null, data); // Indicamos que la operación terminó con éxito
-  } catch (err) {
-    done(err); // Si hay un error, pasamos el error al callback
-  }
+  return await janeFonda.save();
 };
 
-// Si el test no pasa, podrías intentar omitir done en el código de las pruebas.
-
-const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+// Función para crear múltiples personas
+const createManyPeople = async (arrayOfPeople) => {
+  return await PersonModel.create(arrayOfPeople);
 };
 
-const findPeopleByName = (personName, done) => {
-  done(null /*, data*/);
+// Función para buscar personas por nombre
+const findPeopleByName = async (personName) => {
+  return await PersonModel.find({ name: personName }).exec();
 };
 
-const findOneByFood = (food, done) => {
-  done(null /*, data*/);
+// Función para buscar por comida favorita
+const findOneByFood = async (food) => {
+  return await PersonModel.findOne({ favoriteFoods: food }).exec();
 };
 
-const findPersonById = (personId, done) => {
-  done(null /*, data*/);
+// Función para buscar persona por ID
+const findPersonById = async (personId) => {
+  return await PersonModel.findById(personId).exec();
 };
 
-const findEditThenSave = (personId, done) => {
+// Función para buscar, editar y guardar
+const findEditThenSave = async (personId) => {
   const foodToAdd = "hamburger";
-
-  done(null /*, data*/);
+  const person = await PersonModel.findById(personId).exec();
+  person.favoriteFoods.push(foodToAdd);
+  return await person.save();
 };
 
-const findAndUpdate = (personName, done) => {
+// Función para buscar y actualizar
+const findAndUpdate = async (personName) => {
   const ageToSet = 20;
-
-  done(null /*, data*/);
+  return await PersonModel.findOneAndUpdate(
+    { name: personName },
+    { age: ageToSet },
+    { new: true },
+  ).exec();
 };
 
-const removeById = (personId, done) => {
-  done(null /*, data*/);
+// Función para eliminar por ID
+const removeById = async (personId) => {
+  return await PersonModel.findByIdAndRemove(personId).exec();
 };
 
-const removeManyPeople = (done) => {
+// Función para eliminar múltiples personas
+const removeManyPeople = async () => {
   const nameToRemove = "Mary";
-
-  done(null /*, data*/);
+  return await PersonModel.deleteMany({ name: nameToRemove }).exec();
 };
 
-const queryChain = (done) => {
+// Función para cadena de consultas
+const queryChain = async () => {
   const foodToSearch = "burrito";
-
-  done(null /*, data*/);
+  return await PersonModel.find({ favoriteFoods: foodToSearch })
+    .sort({ name: 1 })
+    .limit(2)
+    .select({ age: 0 })
+    .exec();
 };
 
 /** **Well Done !!**
