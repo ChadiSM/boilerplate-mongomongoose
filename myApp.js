@@ -12,7 +12,7 @@ var personSchema = new mongoose.Schema({
   favoriteFoods: [String],
 });
 
-var Person = mongoose.model("person", personSchema);
+var Person = mongoose.model("Person", personSchema);
 
 // Función que crea y guarda a una persona de manera asincrónica
 const createAndSavePerson = async (done) => {
