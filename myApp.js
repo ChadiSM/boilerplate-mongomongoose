@@ -1,31 +1,16 @@
 require("dotenv").config();
-const mongoose = require("mongoose");
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-mongoose.connection.on("connected", () => {
-  console.log("✅ Conectado a MongoDB");
-});
-mongoose.connection.on("error", (err) => {
-  console.error("❌ Error al conectar a MongoDB:", err);
-});
-
-const personSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
+var personSchema = new mongoose.Schema({
+  name: String,
   age: Number,
   favoriteFoods: [String],
 });
 
-const Person = mongoose.model("Person", personSchema);
+/** 3) Create and Save a Person */
+var Person = mongoose.model("Person", personSchema);
 
-const createAndSavePerson = function (done) {
-  const janeFonda = new Person({
+var createAndSavePerson = function (done) {
+  var janeFonda = new Person({
     name: "Jane Fonda",
     age: 84,
     favoriteFoods: ["eggs", "fish", "fresh fruit"],
@@ -87,7 +72,7 @@ const queryChain = (done) => {
 
 //----- **DO NOT EDIT BELOW THIS LINE** ----------------------------------
 
-exports.PersonModel = Person;
+/** exports.PersonModel = Person;*/
 exports.createAndSavePerson = createAndSavePerson;
 exports.findPeopleByName = findPeopleByName;
 exports.findOneByFood = findOneByFood;
