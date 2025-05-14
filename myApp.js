@@ -35,8 +35,11 @@ const createAndSavePerson = async (done) => {
 };
 
 // Función para crear múltiples personas
-const createManyPeople = async (arrayOfPeople) => {
-  return await PersonModel.create(arrayOfPeople);
+const createManyPeople = (arrayOfPeople, done) => {
+  PersonModel.create(arrayOfPeople, (err, data) => {
+    if (err) return done(err);
+    return done(null, data);
+  });
 };
 
 // Función para buscar personas por nombre
