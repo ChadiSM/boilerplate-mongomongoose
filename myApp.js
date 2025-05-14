@@ -81,13 +81,18 @@ const findEditThenSave = (personId, done) => {
   });
 };
 // Función para buscar y actualizar
-const findAndUpdate = async (personName) => {
+const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
-  return await PersonModel.findOneAndUpdate(
+
+  PersonModel.findOneAndUpdate(
     { name: personName },
     { age: ageToSet },
     { new: true },
-  ).exec();
+    (err, updatedPerson) => {
+      if (err) return done(err);
+      done(null, updatedPerson);
+    },
+  );
 };
 
 // Función para eliminar por ID
