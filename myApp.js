@@ -107,7 +107,7 @@ const removeById = (personId, done) => {
 const removeManyPeople = (done) => {
   const namesToRemove = ["Mary", "Bob"]; // Array de nombres a eliminar
 
-  Person.deleteMany({ name: { $in: namesToRemove } }, (err, result) => {
+  PersonModel.deleteMany({ name: { $in: namesToRemove } }, (err, result) => {
     if (err) return done(err);
     done(null, result);
   });
