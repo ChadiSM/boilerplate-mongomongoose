@@ -43,8 +43,11 @@ const createManyPeople = (arrayOfPeople, done) => {
 };
 
 // Función para buscar personas por nombre
-const findPeopleByName = async (personName) => {
-  return await PersonModel.find({ name: personName }).exec();
+const findPeopleByName = (personName, done) => {
+  PersonModel.find({ name: personName }, (err, data) => {
+    if (err) return done(err);
+    return done(null, data);
+  });
 };
 
 // Función para buscar por comida favorita
