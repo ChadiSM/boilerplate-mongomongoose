@@ -96,8 +96,11 @@ const findAndUpdate = (personName, done) => {
 };
 
 // Función para eliminar por ID
-const removeById = async (personId) => {
-  return await PersonModel.findByIdAndRemove(personId).exec();
+const removeById = (personId, done) => {
+  PersonModel.findByIdAndRemove(personId, (err, removedPerson) => {
+    if (err) return done(err);
+    done(null, removedPerson);
+  });
 };
 
 // Función para eliminar múltiples personas
