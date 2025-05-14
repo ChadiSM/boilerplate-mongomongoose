@@ -58,8 +58,11 @@ const findOneByFood = (food, done) => {
   });
 };
 // Función para buscar persona por ID
-const findPersonById = async (personId) => {
-  return await PersonModel.findById(personId).exec();
+const findPersonById = (personId, done) => {
+  PersonModel.findById(personId, (err, data) => {
+    if (err) return done(err);
+    return done(null, data);
+  });
 };
 
 // Función para buscar, editar y guardar
