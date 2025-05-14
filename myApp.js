@@ -104,12 +104,13 @@ const removeById = (personId, done) => {
 };
 
 // Función para eliminar múltiples personas
-const removeManyPeople = (done) => {
-  const nameToRemove = "Mary";
-    PersonModel.remove({name: nameToRemove}, (err, response) => {
-    if(err) return console.log(err);
-    done(null, response);
-  })
+const removeManyPeople = (nameToRemove, done) => {
+  PersonModel.remove({ name: nameToRemove }, (err, result) => {
+    if (err) return done(err);
+    const deletedCount = result.deletedCount || result.n;
+
+    done(null, deletedCount);
+  });
 };
 
 // Función para cadena de consultas
