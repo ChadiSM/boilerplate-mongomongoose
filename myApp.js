@@ -66,13 +66,20 @@ const findPersonById = (personId, done) => {
 };
 
 // Función para buscar, editar y guardar
-const findEditThenSave = async (personId) => {
+const findEditThenSave = (personId, done) => {
   const foodToAdd = "hamburger";
-  const person = await PersonModel.findById(personId).exec();
-  person.favoriteFoods.push(foodToAdd);
-  return await person.save();
-};
 
+  PersonModel.findById(personId, (err, person) => {
+    if (err) return done(err);
+
+    person.favoriteFoods.push(foodToAdd);
+
+    person.save((err, updatedPerson) => {
+      if (err) return done(err);
+      done(null, updatedPerson);
+    });
+  });
+};
 // Función para buscar y actualizar
 const findAndUpdate = async (personName) => {
   const ageToSet = 20;
