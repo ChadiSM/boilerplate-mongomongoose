@@ -119,13 +119,17 @@ const removeManyPeople = (done) => {
 };
 
 // Función para cadena de consultas
-const queryChain = async () => {
+const queryChain = (done) => {
   const foodToSearch = "burrito";
-  return await PersonModel.find({ favoriteFoods: foodToSearch })
-    .sort({ name: 1 })
+
+  PersonModel.find({ favoriteFoods: foodToSearch })
+    .sort("name")
     .limit(2)
-    .select({ age: 0 })
-    .exec();
+    .select("-age")
+    .exec((err, data) => {
+      if (err) return done(err);
+      done(null, data);
+    });
 };
 
 /** **Well Done !!**
