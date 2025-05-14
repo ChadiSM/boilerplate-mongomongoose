@@ -51,10 +51,12 @@ const findPeopleByName = (personName, done) => {
 };
 
 // Función para buscar por comida favorita
-const findOneByFood = async (food) => {
-  return await PersonModel.findOne({ favoriteFoods: food }).exec();
+const findOneByFood = (food, done) => {
+  PersonModel.findOne({ favoriteFoods: food }, (err, data) => {
+    if (err) return done(err);
+    return done(null, data);
+  });
 };
-
 // Función para buscar persona por ID
 const findPersonById = async (personId) => {
   return await PersonModel.findById(personId).exec();
