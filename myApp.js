@@ -104,9 +104,11 @@ const removeById = (personId, done) => {
 };
 
 // Función para eliminar múltiples personas
-const removeManyPeople = async () => {
-  const nameToRemove = "Mary";
-  return await PersonModel.deleteMany({ name: nameToRemove }).exec();
+const removeManyPeople = (nameToRemove, done) => {
+  PersonModel.remove({ name: nameToRemove }, (err, result) => {
+    if (err) return done(err);
+    done(null, result);
+  });
 };
 
 // Función para cadena de consultas
