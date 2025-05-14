@@ -104,15 +104,11 @@ const removeById = (personId, done) => {
 };
 
 // Función para eliminar múltiples personas
-const removeManyPeople = (nameToRemove, done) => {
-  PersonModel.deleteMany({ name: nameToRemove }, (err, result) => {
-    if (err) {
-      console.error("Error:", err);
-      return done(err);
-    }
+const removeManyPeople = (done) => {
+  const namesToRemove = ["Mary", "Bob"]; // Array de nombres a eliminar
 
-    console.log("Number of documents deleted:", result.deletedCount);
-
+  Person.deleteMany({ name: { $in: namesToRemove } }, (err, result) => {
+    if (err) return done(err);
     done(null, result);
   });
 };
